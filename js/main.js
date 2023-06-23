@@ -19,9 +19,16 @@ function cargarEventListeners() {
 
     vaciarCarritoBtn.addEventListener('click', () => {
         articulosCarrito = []
-        
+
         contenedorCarrito.innerHTML = ''
     })
+
+    // muestra los cursos de local storage
+    document.addEventListener('DOMContentLoaded', () => {
+        articulosCarrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        // console.log(articulosCarrito);
+        carritoHTML();
+    });
 }
 
 // funciones
@@ -40,8 +47,8 @@ function agregarCurso(e) {
 function eliminarCurso(e) {
     if (e.target.classList.contains('borrar-curso')) {
         const cursoId = e.target.getAttribute('data-id');
-        
-        articulosCarrito = articulosCarrito.filter( curso => curso.id !== cursoId)
+
+        articulosCarrito = articulosCarrito.filter(curso => curso.id !== cursoId)
 
         carritoHTML();
     }
@@ -67,12 +74,12 @@ function leerDatosCurso(curso) {
 
     // revisa si un elemento ya existe en el carrito
 
-    const existe = articulosCarrito.some( curso => curso.id === infoCurso.id)
+    const existe = articulosCarrito.some(curso => curso.id === infoCurso.id)
     if (existe) {
         //
 
         const cursos = articulosCarrito.map(curso => {
-            if(curso.id === infoCurso.id) {
+            if (curso.id === infoCurso.id) {
                 curso.cantidad++;
                 return curso;
             } else {
@@ -80,8 +87,8 @@ function leerDatosCurso(curso) {
             }
         })
     } else {
-            //agrega elementos al arreglo de carrito
-    articulosCarrito = [...articulosCarrito, infoCurso];
+        //agrega elementos al arreglo de carrito
+        articulosCarrito = [...articulosCarrito, infoCurso];
     }
 
 
@@ -125,5 +132,10 @@ function carritoHTML() {
 
         contenedorCarrito.appendChild(row);
     })
+    // agrega el carrito al storage
+    sincronizarStorage();
 }
 
+function sincronizarStorage() {
+    localStorage.setItem('carrito', JSON.stringify(articulosCarrito));
+}
