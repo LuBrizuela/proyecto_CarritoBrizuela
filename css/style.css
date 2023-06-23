@@ -40,3 +40,15 @@ ul, li {
     border-radius: 10px;
     color: white;
 }
+
+.footer {
+    background-color: #ffffff;
+    margin-top: 40px;
+    border-top:1px solid #fffdfd;;
+    padding-top: 40px;   
+}
+.footer .menu a{
+display: block;
+margin-bottom: 10px;
+text-decoration: none;
+}
